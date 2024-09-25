@@ -182,7 +182,7 @@ class ServiceBuilder extends AbstractHasDispatcher implements ServiceBuilderInte
         return isset($this->builderConfig[$offset]) || isset($this->clients[$offset]);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->get($offset);
     }
