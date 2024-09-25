@@ -64,16 +64,29 @@ class ServiceBuilder extends AbstractHasDispatcher implements ServiceBuilderInte
     {
         return array('service_builder.create_client');
     }
-
+/*
+    https://php.watch/versions/8.1/serializable-deprecated
+    If a class implements both Serializable interface methods and magic methods __serialize and __unserialize, 
+    magic methods take precedence, and a deprecation notice is not emitted.
+*/
+    public function __unserialize(array $data): void
+    {
+        $this->builderConfig = json_decode($serialized, true);      
+    }
     public function unserialize($serialized)
     {
         $this->builderConfig = json_decode($serialized, true);
     }
 
+    public function __serialize(): array 
+    {
+        return json_encode($this->builderConfig);
+    }
     public function serialize()
     {
         return json_encode($this->builderConfig);
     }
+
 
     /**
      * Attach a plugin to every client created by the builder
