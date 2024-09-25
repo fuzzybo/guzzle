@@ -171,7 +171,7 @@ class ServiceBuilder extends AbstractHasDispatcher implements ServiceBuilderInte
         $this->set($offset, $value);
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->builderConfig[$offset]);
         unset($this->clients[$offset]);
