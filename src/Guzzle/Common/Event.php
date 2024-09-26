@@ -40,7 +40,7 @@ class Event extends SymfonyEvent implements ToArrayInterface, \ArrayAccess, \Ite
         return isset($this->context[$offset]);
     }
 
-    public function offsetUnset($offset): mixed
+    public function offsetUnset($offset): void
     {
         unset($this->context[$offset]);
     }
