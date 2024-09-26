@@ -25,22 +25,22 @@ class Event extends SymfonyEvent implements ToArrayInterface, \ArrayAccess, \Ite
         return new \ArrayIterator($this->context);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return isset($this->context[$offset]) ? $this->context[$offset] : null;
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->context[$offset] = $value;
     }
 
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->context[$offset]);
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): mixed
     {
         unset($this->context[$offset]);
     }
