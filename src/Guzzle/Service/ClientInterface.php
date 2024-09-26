@@ -64,5 +64,5 @@ interface ClientInterface extends HttpClientInterface, FromConfigInterface
      *
      * @return ResourceIteratorInterface
      */
-    public function getIterator($command, array $commandOptions = null, array $iteratorOptions = array());
+    public function getIterator($command, array $commandOptions = null, array $iteratorOptions = array()): \Traversable;
 }
