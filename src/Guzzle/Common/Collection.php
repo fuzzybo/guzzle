@@ -306,7 +306,7 @@ class Collection implements \ArrayAccess, \IteratorAggregate, \Countable, ToArra
         $this->data[$offset] = $value;
     }
 
-    public function offsetUnset($offset): mixed
+    public function offsetUnset($offset): void
     {
         unset($this->data[$offset]);
     }
