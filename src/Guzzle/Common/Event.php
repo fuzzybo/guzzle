@@ -20,7 +20,7 @@ class Event extends SymfonyEvent implements ToArrayInterface, \ArrayAccess, \Ite
         $this->context = $context;
     }
 
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->context);
     }
