@@ -121,7 +121,7 @@ class Client extends HttpClient implements ClientInterface
         return $this;
     }
 
-    public function getIterator($command, array $commandOptions = null, array $iteratorOptions = array())
+    public function getIterator($command, array $commandOptions = null, array $iteratorOptions = array()): \Traversable
     {
         if (!($command instanceof CommandInterface)) {
             $command = $this->getCommand($command, $commandOptions ?: array());
