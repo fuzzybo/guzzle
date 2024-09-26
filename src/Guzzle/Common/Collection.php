@@ -42,12 +42,12 @@ class Collection implements \ArrayAccess, \IteratorAggregate, \Countable, ToArra
         return new self($data);
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->data);
     }
 
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->data);
     }
