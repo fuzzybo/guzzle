@@ -141,6 +141,13 @@ class ArrayCookieJar implements CookieJarInterface, \Serializable
      *
      * @return string
      */
+    public function __serialize()
+    {
+        // Only serialize long term cookies and unexpired cookies
+        return json_encode(array_map(function (Cookie $cookie) {
+            return $cookie->toArray();
+        }, $this->all(null, null, null, true, true)));
+    }
     public function serialize()
     {
         // Only serialize long term cookies and unexpired cookies
@@ -152,6 +159,17 @@ class ArrayCookieJar implements CookieJarInterface, \Serializable
     /**
      * Unserializes the cookie cookieJar
      */
+    public function __unserialize($data)
+    {
+        $data = json_decode($data, true);
+        if (empty($data)) {
+            $this->cookies = array();
+        } else {
+            $this->cookies = array_map(function (array $cookie) {
+                return new Cookie($cookie);
+            }, $data);
+        }
+    }
     public function unserialize($data)
     {
         $data = json_decode($data, true);
@@ -169,7 +187,7 @@ class ArrayCookieJar implements CookieJarInterface, \Serializable
      *
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->cookies);
     }
@@ -179,7 +197,7 @@ class ArrayCookieJar implements CookieJarInterface, \Serializable
      *
      * @return \ArrayIterator
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->cookies);
     }
