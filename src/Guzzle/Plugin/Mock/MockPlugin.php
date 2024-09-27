@@ -96,7 +96,7 @@ class MockPlugin extends AbstractHasDispatcher implements EventSubscriberInterfa
      *
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->queue);
     }
