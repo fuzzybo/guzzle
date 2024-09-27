@@ -131,7 +131,7 @@ abstract class ResourceIterator extends AbstractHasDispatcher implements Resourc
         return max(0, $this->iteratedCount - 1);
     }
 
-    public function count()
+    public function count(): int
     {
         return $this->retrievedCount;
     }
