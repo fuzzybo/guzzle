@@ -38,9 +38,10 @@ class Url
         }
 
         $parts += $defaults;
-        $parts['query'] = $parts['query'] ?? '';        // 20240927 strlen doesn't like $parts['query'] to be null 
+        
         // Convert the query string into a QueryString object
-        if ($parts['query'] || 0 !== strlen($parts['query'])) {
+        // 20240927 strlen doesn't like $parts['query'] to be null 
+        if ($parts['query'] || 0 !== strlen($parts['query'] ?? '')) {
             $parts['query'] = QueryString::fromString($parts['query']);
         }
 
@@ -86,7 +87,8 @@ class Url
         }
 
         // Add the path component if present
-        if (isset($parts['path']) && 0 !== strlen($parts['path'])) {
+        // 20240927 strlen doesn't like $parts['path'] to be null 
+        if (isset($parts['path']) && 0 !== strlen($parts['path'] ?? '')) {
             // Always ensure that the path begins with '/' if set and something is before the path
             if ($url && $parts['path'][0] != '/' && substr($url, -1)  != '/') {
                 $url .= '/';
@@ -273,8 +275,7 @@ class Url
         if (is_array($path)) {
             $path = '/' . implode('/', $path);
         }
-        else
-        {
+        else {
             $path = $path ?? '';        // 20240927 strtr doesn't like $path to be null
         }
         $this->path = strtr($path, $pathReplace);
