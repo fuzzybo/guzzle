@@ -69,7 +69,7 @@ class Batch implements BatchInterface
         return $items;
     }
 
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return count($this->queue) == 0 && count($this->dividedBatches) == 0;
     }
