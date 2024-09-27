@@ -176,7 +176,7 @@ class CurlMulti extends AbstractHasDispatcher implements CurlMultiInterface
      *
      * @return CurlHandle
      */
-    protected function createCurlHandle(RequestInterface $request)
+    protected function createCurlHandle(RequestInterface $request): CurlHandle
     {
         $wrapper = CurlHandle::factory($request);
         $this->handles[$request] = $wrapper;
