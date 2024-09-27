@@ -38,9 +38,9 @@ class Url
         }
 
         $parts += $defaults;
-
+        $parts['query'] = $parts['query'] ?? '';        // 20240927 strlen doesn't like $parts['query'] to be null 
         // Convert the query string into a QueryString object
-        if ($parts['query'] || 0 !== strlen($parts['query'] ?? '')) {
+        if ($parts['query'] || 0 !== strlen($parts['query'])) {
             $parts['query'] = QueryString::fromString($parts['query']);
         }
 
@@ -273,7 +273,10 @@ class Url
         if (is_array($path)) {
             $path = '/' . implode('/', $path);
         }
-
+        else
+        {
+            $path = $path ?? '';        // 20240927 strtr doesn't like $path to be null
+        }
         $this->path = strtr($path, $pathReplace);
 
         return $this;
