@@ -198,7 +198,11 @@ class CurlHandle
         }
 
         // Apply the options to a new cURL handle.
+        // PHP 8.0.0 	On success, this function returns a CurlHandle instance now; previously, a resource was returned.
         $handle = curl_init();
+        if ($handle == false) {
+            throw new InvalidArgumentException('curl_init returned false');
+        }    
 
         // Enable the progress function if the 'progress' param was set
         if ($requestCurlOptions->get('progress')) {
@@ -233,9 +237,11 @@ class CurlHandle
      */
     public function __construct($handle, $options)
     {
+    /*
         if (!is_resource($handle)) {
             throw new InvalidArgumentException('Invalid handle provided');
-        }
+        }    
+    */
         if (is_array($options)) {
             $this->options = new Collection($options);
         } elseif ($options instanceof Collection) {
@@ -259,9 +265,9 @@ class CurlHandle
      */
     public function close()
     {
-        if (is_resource($this->handle)) {
+//        if (is_resource($this->handle)) {
             curl_close($this->handle);
-        }
+//        }
         $this->handle = null;
     }
 
