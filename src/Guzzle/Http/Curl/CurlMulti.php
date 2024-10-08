@@ -14,6 +14,7 @@ use Guzzle\Http\Message\RequestInterface;
 class CurlMulti extends AbstractHasDispatcher implements CurlMultiInterface
 {
     /** @var resource cURL multi handle. */
+    // 8.0.0 	it's a CurlMultiHandle instance
     protected $multiHandle;
 
     /** @var array Attached {@see RequestInterface} objects. */
@@ -52,9 +53,9 @@ class CurlMulti extends AbstractHasDispatcher implements CurlMultiInterface
 
     public function __destruct()
     {
-        if (is_resource($this->multiHandle)) {
-            curl_multi_close($this->multiHandle);
-        }
+//        if (is_resource($this->multiHandle)) {
+            curl_multi_close($this->multiHandle);    // This function has no effect. Prior to PHP 8.0.0, this function was used to close the resource. 
+//        }
     }
 
     public function add(RequestInterface $request)
