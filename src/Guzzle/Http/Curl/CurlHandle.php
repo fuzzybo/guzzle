@@ -22,7 +22,8 @@ class CurlHandle
     /** @var Collection Curl options */
     protected $options;
 
-    /** @var resource Curl resource handle */
+    /** @var CurlHandle Curl resource handle */
+    // 8.0.0 	handle expects a CurlHandle instance now; previously, a resource was expected. 
     protected $handle;
 
     /** @var int CURLE_* error */
@@ -199,8 +200,15 @@ class CurlHandle
 
         // Apply the options to a new cURL handle.
         // PHP 8.0.0 	On success, this function returns a CurlHandle instance now; previously, a resource was returned.
-        $handle = curl_init();
-        if ($handle == false) {
+        // https://phpbackend.com/blog/post/php-8-0-curlHandle-object-in-curl-functions
+        if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
+            $handle = curl_init();
+        }
+        else
+        {
+            throw new InvalidArgumentException('curl_* functions require PHP8 and work with CurlHandle objects');
+        }    
+        if ($handle === false) {
             throw new InvalidArgumentException('curl_init returned false');
         }    
 
@@ -213,9 +221,9 @@ class CurlHandle
                 $args[] = $handle;
 
                 // PHP 5.5 pushed the handle onto the start of the args
-                if (is_resource($args[0])) {
+                /* if (is_resource($args[0])) {
                     array_shift($args);
-                }
+                }*/
 
                 call_user_func_array(array($mediator, 'progress'), $args);
             };
@@ -266,9 +274,10 @@ class CurlHandle
     public function close()
     {
 //        if (is_resource($this->handle)) {
-            curl_close($this->handle);
+//            curl_close($this->handle);    // This function has no effect. Prior to PHP 8.0.0, this function was used to close the resource. 
 //        }
-        $this->handle = null;
+//        $this->handle = null;
+        unset($this->handle);
     }
 
     /**
@@ -278,7 +287,8 @@ class CurlHandle
      */
     public function isAvailable()
     {
-        return is_resource($this->handle);
+//        return is_resource($this->handle);
+        return !($this->handle === false);
     }
 
     /**
@@ -328,7 +338,8 @@ class CurlHandle
      */
     public function getInfo($option = null)
     {
-        if (!is_resource($this->handle)) {
+//        if (!is_resource($this->handle)) {
+        if ($handle === false) {   
             return null;
         }
 
