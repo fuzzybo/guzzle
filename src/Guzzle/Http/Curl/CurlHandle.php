@@ -339,7 +339,7 @@ class CurlHandle
     public function getInfo($option = null)
     {
 //        if (!is_resource($this->handle)) {
-        if ($handle === false) {   
+        if ($this->handle === false) {   
             return null;
         }
 
