@@ -2,7 +2,7 @@
 
 namespace Guzzle\Common;
 
-use Symfony\Component\EventDispatcher\Event as SymfonyEvent;
+use Symfony\Contracts\EventDispatcher\Event as SymfonyEvent;
 
 /**
  * Default event for Guzzle notifications
