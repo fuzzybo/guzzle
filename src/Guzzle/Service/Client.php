@@ -88,7 +88,7 @@ class Client extends HttpClient implements ClientInterface
         }
 
         $command->setClient($this);
-        $this->dispatch('client.command.create', array('client' => $this, 'command' => $command));
+        $this->dispatch(array('client' => $this, 'command' => $command),'client.command.create');
 
         return $command;
     }
@@ -134,7 +134,7 @@ class Client extends HttpClient implements ClientInterface
     {
         if ($command instanceof CommandInterface) {
             $this->send($this->prepareCommand($command));
-            $this->dispatch('command.after_send', array('command' => $command));
+            $this->dispatch(array('command' => $command),'command.after_send');
             return $command->getResult();
         } elseif (is_array($command) || $command instanceof \Traversable) {
             return $this->executeMultiple($command);
@@ -201,7 +201,7 @@ class Client extends HttpClient implements ClientInterface
         $request = $command->setClient($this)->prepare();
         // Set the state to new if the command was previously executed
         $request->setState(RequestInterface::STATE_NEW);
-        $this->dispatch('command.before_send', array('command' => $command));
+        $this->dispatch(array('command' => $command),'command.before_send');
 
         return $request;
     }
@@ -228,7 +228,7 @@ class Client extends HttpClient implements ClientInterface
         try {
             $this->send($requests);
             foreach ($commands as $command) {
-                $this->dispatch('command.after_send', array('command' => $command));
+                $this->dispatch(array('command' => $command),'command.after_send');
             }
             return $commands;
         } catch (MultiTransferException $failureException) {
@@ -246,7 +246,7 @@ class Client extends HttpClient implements ClientInterface
             // Always emit the command after_send events for successful commands
             foreach ($commandRequests as $success) {
                 $e->addSuccessfulCommand($commandRequests[$success]);
-                $this->dispatch('command.after_send', array('command' => $commandRequests[$success]));
+                $this->dispatch(array('command' => $commandRequests[$success]),'command.after_send');
             }
 
             throw $e;
