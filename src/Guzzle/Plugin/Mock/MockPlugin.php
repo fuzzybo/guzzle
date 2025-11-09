@@ -179,7 +179,7 @@ class MockPlugin extends AbstractHasDispatcher implements EventSubscriberInterfa
      */
     public function dequeue(RequestInterface $request)
     {
-        $this->dispatch('mock.request', array('plugin' => $this, 'request' => $request));
+        $this->dispatch(array('plugin' => $this, 'request' => $request), 'mock.request');
 
         $item = array_shift($this->queue);
         if ($item instanceof Response) {
