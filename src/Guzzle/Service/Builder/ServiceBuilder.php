@@ -6,7 +6,7 @@ use Guzzle\Common\AbstractHasDispatcher;
 use Guzzle\Service\ClientInterface;
 use Guzzle\Service\Exception\ServiceBuilderException;
 use Guzzle\Service\Exception\ServiceNotFoundException;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Contracts\EventDispatcher\EventSubscriberInterface;
 
 /**
  * {@inheritdoc}
@@ -162,7 +162,7 @@ class ServiceBuilder extends AbstractHasDispatcher implements ServiceBuilderInte
                 $client->addSubscriber($plugin);
             }
             // Dispatch an event letting listeners know a client was created
-            $this->dispatch('service_builder.create_client', array('client' => $client));
+            $this->dispatch(array('client' => $client), 'service_builder.create_client');
         }
 
         return $client;
