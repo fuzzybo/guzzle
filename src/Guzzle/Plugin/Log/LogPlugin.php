@@ -8,7 +8,7 @@ use Guzzle\Log\MessageFormatter;
 use Guzzle\Log\ClosureLogAdapter;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\Message\EntityEnclosingRequestInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Contracts\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Plugin class that will add request and response logging to an HTTP request.
