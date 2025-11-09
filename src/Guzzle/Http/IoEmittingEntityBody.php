@@ -4,9 +4,9 @@ namespace Guzzle\Http;
 
 use Guzzle\Common\Event;
 use Guzzle\Common\HasDispatcherInterface;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcher;
+use Symfony\Contracts\EventDispatcher\EventSubscriberInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * EntityBody decorator that emits events for read and write methods
@@ -41,7 +41,7 @@ class IoEmittingEntityBody extends AbstractEntityBodyDecorator implements HasDis
         return $this->eventDispatcher;
     }
 
-    public function dispatch($eventName, array $context = array())
+    public function dispatch(array $context = array(), $eventName)
     {
         return $this->getEventDispatcher()->dispatch($eventName, new Event($context));
     }
@@ -64,7 +64,7 @@ class IoEmittingEntityBody extends AbstractEntityBodyDecorator implements HasDis
             'length' => $length,
             'read'   => $this->body->read($length)
         );
-        $this->dispatch('body.read', $event);
+        $this->dispatch($event, 'body.read');
 
         return $event['read'];
     }
@@ -76,7 +76,7 @@ class IoEmittingEntityBody extends AbstractEntityBodyDecorator implements HasDis
             'write'  => $string,
             'result' => $this->body->write($string)
         );
-        $this->dispatch('body.write', $event);
+        $this->dispatch($event, 'body.write');
 
         return $event['result'];
     }
