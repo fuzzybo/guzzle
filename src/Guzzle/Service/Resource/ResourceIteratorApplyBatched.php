@@ -69,14 +69,14 @@ class ResourceIteratorApplyBatched extends AbstractHasDispatcher
             ->createBatchesWith(new BatchSizeDivisor($perBatch))
             ->transferWith(new BatchClosureTransfer(function (array $batch) use ($that, $callback, &$batches, $it) {
                 $batches++;
-                $that->dispatch('iterator_batch.before_batch', array('iterator' => $it, 'batch' => $batch));
+                $that->dispatch(array('iterator' => $it, 'batch' => $batch), 'iterator_batch.before_batch');
                 call_user_func_array($callback, array($it, $batch));
-                $that->dispatch('iterator_batch.after_batch', array('iterator' => $it, 'batch' => $batch));
+                $that->dispatch(array('iterator' => $it, 'batch' => $batch), 'iterator_batch.after_batch');
             }))
             ->autoFlushAt($perBatch)
             ->build();
 
-        $this->dispatch('iterator_batch.created_batch', array('batch' => $batch));
+        $this->dispatch(array('batch' => $batch), 'iterator_batch.created_batch');
 
         foreach ($this->iterator as $resource) {
             $this->iterated++;
