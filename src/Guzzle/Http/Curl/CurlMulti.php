@@ -64,7 +64,7 @@ class CurlMulti extends AbstractHasDispatcher implements CurlMultiInterface
         // If requests are currently transferring and this is async, then the
         // request must be prepared now as the send() method is not called.
         $this->beforeSend($request);
-        $this->dispatch(self::ADD_REQUEST, array('request' => $request));
+        $this->dispatch(array('request' => $request), self::ADD_REQUEST);
 
         return $this;
     }
@@ -81,7 +81,7 @@ class CurlMulti extends AbstractHasDispatcher implements CurlMultiInterface
             $request = $this->requests[$index];
             unset($this->requests[$index]);
             $this->requests = array_values($this->requests);
-            $this->dispatch(self::REMOVE_REQUEST, array('request' => $request));
+            $this->dispatch(array('request' => $request), self::REMOVE_REQUEST);
             return true;
         }
 
@@ -199,7 +199,7 @@ class CurlMulti extends AbstractHasDispatcher implements CurlMultiInterface
             foreach ($this->requests as $request) {
                 ++$total;
                 $event['request'] = $request;
-                $request->getEventDispatcher()->dispatch(self::POLLING_REQUEST, $event);
+                $request->getEventDispatcher()->dispatch($event, self::POLLING_REQUEST);
                 // The blocking variable just has to be non-falsey to block the loop
                 if ($request->getParams()->hasKey(self::BLOCKING)) {
                     ++$blocking;
@@ -260,7 +260,7 @@ class CurlMulti extends AbstractHasDispatcher implements CurlMultiInterface
     {
         $this->exceptions[] = array('request' => $request, 'exception' => $e);
         $this->remove($request);
-        $this->dispatch(self::MULTI_EXCEPTION, array('exception' => $e, 'all_exceptions' => $this->exceptions));
+        $this->dispatch(array('exception' => $e, 'all_exceptions' => $this->exceptions), self::MULTI_EXCEPTION);
     }
 
     /**
