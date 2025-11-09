@@ -230,7 +230,7 @@ abstract class AbstractCommand extends Collection implements CommandInterface
             }
 
             // Notify subscribers of the client that the command is being prepared
-            $this->client->dispatch('command.before_prepare', array('command' => $this));
+            $this->client->dispatch(array('command' => $this), 'command.before_prepare');
 
             // Fail on missing required arguments, and change parameters via filters
             $this->validate();
@@ -254,7 +254,7 @@ abstract class AbstractCommand extends Collection implements CommandInterface
                 $this->request->setResponseBody($responseBody);
             }
 
-            $this->client->dispatch('command.after_prepare', array('command' => $this));
+            $this->client->dispatch(array('command' => $this), 'command.after_prepare');
         }
 
         return $this->request;
