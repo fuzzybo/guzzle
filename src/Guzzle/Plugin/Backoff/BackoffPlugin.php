@@ -8,7 +8,7 @@ use Guzzle\Http\Message\EntityEnclosingRequestInterface;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Curl\CurlMultiInterface;
 use Guzzle\Http\Exception\CurlException;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Contracts\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Plugin to automatically retry failed HTTP requests using a backoff strategy
@@ -89,13 +89,13 @@ class BackoffPlugin extends AbstractHasDispatcher implements EventSubscriberInte
                 ->set(self::DELAY_PARAM, microtime(true) + $delay);
             // Send the request again
             $request->setState(RequestInterface::STATE_TRANSFER);
-            $this->dispatch(self::RETRY_EVENT, array(
+            $this->dispatch(array(
                 'request'  => $request,
                 'response' => $response,
                 'handle'   => ($exception && $exception instanceof CurlException) ? $exception->getCurlHandle() : null,
                 'retries'  => $retries,
                 'delay'    => $delay
-            ));
+            ), self::RETRY_EVENT);
         }
     }
 
