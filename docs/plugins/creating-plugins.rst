@@ -13,7 +13,7 @@ of its plugin architecture.
 Overview
 --------
 
-Plugins must implement the ``Symfony\Component\EventDispatcher\EventSubscriberInterface`` interface. The
+Plugins must implement the ``Symfony\Contracts\EventDispatcher\EventSubscriberInterface`` interface. The
 ``EventSubscriberInterface`` requires that your class implements a static method, ``getSubscribedEvents()``, that
 returns an associative array mapping events to methods on the object. See the
 `Symfony2 documentation <http://symfony.com/doc/2.0/book/internals.html#the-event-dispatcher>`_ for more information.
@@ -66,7 +66,7 @@ Simple Echo plugin
 This simple plugin prints a string containing the request that is about to be sent by listening to the
 ``request.before_send`` event::
 
-    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Contracts\EventDispatcher\EventSubscriberInterface;
 
     class EchoPlugin implements EventSubscriberInterface
     {
