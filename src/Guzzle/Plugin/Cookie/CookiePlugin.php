@@ -5,7 +5,7 @@ namespace Guzzle\Plugin\Cookie;
 use Guzzle\Common\Event;
 use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Guzzle\Plugin\Cookie\CookieJar\CookieJarInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Contracts\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Adds, extracts, and persists cookies between HTTP requests
