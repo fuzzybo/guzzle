@@ -11,7 +11,7 @@ use Guzzle\Http\Message\RequestFactory;
 use Guzzle\Http\Message\EntityEnclosingRequestInterface;
 use Guzzle\Http\Exception\TooManyRedirectsException;
 use Guzzle\Http\Exception\CouldNotRewindStreamException;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Contracts\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Plugin to implement HTTP redirects. Can redirect like a web browser or using strict RFC 2616 compliance
