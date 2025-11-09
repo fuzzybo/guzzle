@@ -2,8 +2,8 @@
 
 namespace Guzzle\Common;
 
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Holds an event dispatcher
@@ -41,7 +41,7 @@ interface HasDispatcherInterface
      *
      * @return Event Returns the created event object
      */
-    public function dispatch($eventName, array $context = array());
+    public function dispatch(array $context = array(), $eventName);
 
     /**
      * Add an event subscriber to the dispatcher
