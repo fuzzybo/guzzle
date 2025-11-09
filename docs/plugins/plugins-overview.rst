@@ -7,7 +7,7 @@ The workflow of sending a request and parsing a response is driven by Guzzle's e
 
 Any object in Guzzle that emits events will implement the ``Guzzle\Common\HasEventDispatcher`` interface. You can add
 event subscribers directly to these objects using the ``addSubscriber()`` method, or you can grab the
-``Symfony\Component\EventDispatcher\EventDispatcher`` object owned by the object using ``getEventDispatcher()`` and
+``Symfony\Contracts\EventDispatcher\EventDispatcher`` object owned by the object using ``getEventDispatcher()`` and
 add a listener or event subscriber.
 
 Adding event subscribers to clients
