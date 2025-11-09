@@ -272,7 +272,7 @@ Adding a plugin to all clients
 ------------------------------
 
 You can add a plugin to all clients created by a service builder using the ``addGlobalPlugin($plugin)`` method of a
-service builder and passing a ``Symfony\Component\EventDispatcher\EventSubscriberInterface`` object. The service builder
+service builder and passing a ``Symfony\Contracts\EventDispatcher\EventSubscriberInterface`` object. The service builder
 will then attach each global plugin to every client as it is created. This allows you to, for example, add a LogPlugin
 to every request created by a service builder for easy debugging.
 
