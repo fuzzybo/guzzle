@@ -46,11 +46,11 @@ class PhpStreamRequestFactory implements StreamRequestFactoryInterface
         }
 
         // Dispatch the before send event
-        $request->dispatch('request.before_send', array(
+        $request->dispatch(array(
             'request'         => $request,
             'context'         => $this->context,
             'context_options' => $this->contextOptions
-        ));
+        ), 'request.before_send');
 
         $this->setUrl($request);
         $this->addDefaultContextOptions($request);
