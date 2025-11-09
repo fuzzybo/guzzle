@@ -1,5 +1,6 @@
 CHANGELOG
 =========
+20251110 Changed params for EventDispatcherInterface::dispatch() method 
 
 3.8.1 (2013-01-28)
 ------------------
