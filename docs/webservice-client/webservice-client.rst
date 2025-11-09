@@ -576,7 +576,7 @@ Plugins and events
 ==================
 
 ``Guzzle\Service\Client`` exposes various events that allow you to hook in custom logic. A client object owns a
-``Symfony\Component\EventDispatcher\EventDispatcher`` object that can be accessed by calling
+``Symfony\Contracts\EventDispatcher\EventDispatcher`` object that can be accessed by calling
 ``$client->getEventDispatcher()``. You can use the event dispatcher to add listeners (a simple callback function) or
 event subscribers (classes that listen to specific events of a dispatcher).
 
