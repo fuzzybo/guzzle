@@ -12,7 +12,7 @@ use Guzzle\Http\Message\Response;
 use Guzzle\Cache\DoctrineCacheAdapter;
 use Guzzle\Http\Exception\CurlException;
 use Doctrine\Common\Cache\ArrayCache;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Contracts\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Plugin to enable the caching of GET and HEAD requests.  Caching can be done on all requests passing through this
