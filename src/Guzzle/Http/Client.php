@@ -447,7 +447,7 @@ class Client extends AbstractHasDispatcher implements ClientInterface
             $this->requestFactory->applyOptions($request, $options);
         }
 
-        $this->dispatch('client.create_request', array('client' => $this, 'request' => $request));
+        $this->dispatch(array('client' => $this, 'request' => $request), 'client.create_request');
 
         return $request;
     }
