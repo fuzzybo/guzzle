@@ -15,9 +15,9 @@ use Guzzle\Http\EntityBodyInterface;
 use Guzzle\Http\Message\Header\HeaderInterface;
 use Guzzle\Http\Url;
 use Guzzle\Parser\ParserRegistry;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcher;
+use Symfony\Contracts\EventDispatcher\EventSubscriberInterface;
 
 /**
  * HTTP request class to send requests
@@ -121,7 +121,7 @@ class Request extends AbstractMessage implements RequestInterface
         $this->headers = clone $this->headers;
 
         $this->setState(RequestInterface::STATE_NEW);
-        $this->dispatch('request.clone', array('request' => $this));
+        $this->dispatch(array('request' => $this),'request.clone');
     }
 
     /**
@@ -370,7 +370,7 @@ class Request extends AbstractMessage implements RequestInterface
                     if ($this->hasHeader('Transfer-Encoding') && $this->hasHeader('Content-Length')) {
                         $this->removeHeader('Transfer-Encoding');
                     }
-                    $this->dispatch('request.before_send', array('request' => $this));
+                    $this->dispatch(array('request' => $this),'request.before_send');
                 }
                 break;
             case self::STATE_COMPLETE:
@@ -381,11 +381,11 @@ class Request extends AbstractMessage implements RequestInterface
                 break;
             case self::STATE_ERROR:
                 if (isset($context['exception'])) {
-                    $this->dispatch('request.exception', array(
+                    $this->dispatch(array(
                         'request'   => $this,
                         'response'  => isset($context['response']) ? $context['response'] : $this->response,
                         'exception' => isset($context['exception']) ? $context['exception'] : null
-                    ));
+                    ), 'request.exception');
                 }
         }
 
@@ -529,11 +529,11 @@ class Request extends AbstractMessage implements RequestInterface
         return $this->eventDispatcher;
     }
 
-    public function dispatch($eventName, array $context = array())
+    public function dispatch(array $context = array(),$eventName)
     {
         $context['request'] = $this;
 
-        return $this->getEventDispatcher()->dispatch($eventName, new Event($context));
+        return $this->getEventDispatcher()->dispatch(new Event($context),$eventName);
     }
 
     public function addSubscriber(EventSubscriberInterface $subscriber)
@@ -574,19 +574,19 @@ class Request extends AbstractMessage implements RequestInterface
         $this->state = self::STATE_COMPLETE;
 
         // A request was sent, but we don't know if we'll send more or if the final response will be successful
-        $this->dispatch('request.sent', $this->getEventArray() + $context);
+        $this->dispatch($this->getEventArray() + $context,'request.sent');
 
         // Some response processors will remove the response or reset the state (example: ExponentialBackoffPlugin)
         if ($this->state == RequestInterface::STATE_COMPLETE) {
 
             // The request completed, so the HTTP transaction is complete
-            $this->dispatch('request.complete', $this->getEventArray());
+            $this->dispatch($this->getEventArray(), 'request.complete');
 
             // If the response is bad, allow listeners to modify it or throw exceptions. You can change the response by
             // modifying the Event object in your listeners or calling setResponse() on the request
             if ($this->response->isError()) {
                 $event = new Event($this->getEventArray());
-                $this->getEventDispatcher()->dispatch('request.error', $event);
+                $this->getEventDispatcher()->dispatch($event, 'request.error');
                 // Allow events of request.error to quietly change the response
                 if ($event['response'] !== $this->response) {
                     $this->response = $event['response'];
@@ -595,7 +595,7 @@ class Request extends AbstractMessage implements RequestInterface
 
             // If a successful response was received, dispatch an event
             if ($this->response->isSuccessful()) {
-                $this->dispatch('request.success', $this->getEventArray());
+                $this->dispatch($this->getEventArray(), 'request.success');
             }
         }
     }
