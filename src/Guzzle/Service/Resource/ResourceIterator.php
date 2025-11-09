@@ -201,10 +201,10 @@ abstract class ResourceIterator extends AbstractHasDispatcher implements Resourc
                 reset($this->resources);
             }
 
-            $this->dispatch('resource_iterator.after_send', array(
+            $this->dispatch(array(
                 'iterator'  => $this,
                 'resources' => $this->resources
-            ));
+            ), 'resource_iterator.after_send');
         }
     }
 
