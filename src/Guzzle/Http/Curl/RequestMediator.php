@@ -59,12 +59,12 @@ class RequestMediator
             $response->setStatus($code, $status);
             $this->request->startResponse($response);
 
-            $this->request->dispatch('request.receive.status_line', array(
+            $this->request->dispatch(array(
                 'request'       => $this,
                 'line'          => $header,
                 'status_code'   => $code,
                 'reason_phrase' => $status
-            ));
+            ), 'request.receive.status_line');
 
         } elseif ($pos = strpos($header, ':')) {
             $this->request->getResponse()->addHeader(
@@ -87,14 +87,14 @@ class RequestMediator
      */
     public function progress($downloadSize, $downloaded, $uploadSize, $uploaded, $handle = null)
     {
-        $this->request->dispatch('curl.callback.progress', array(
+        $this->request->dispatch( array(
             'request'       => $this->request,
             'handle'        => $handle,
             'download_size' => $downloadSize,
             'downloaded'    => $downloaded,
             'upload_size'   => $uploadSize,
             'uploaded'      => $uploaded
-        ));
+        ), 'curl.callback.progress');
     }
 
     /**
