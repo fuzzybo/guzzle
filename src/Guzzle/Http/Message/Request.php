@@ -529,7 +529,7 @@ class Request extends AbstractMessage implements RequestInterface
         return $this->eventDispatcher;
     }
 
-    public function dispatch(array $context = array(),$eventName)
+    public function dispatch(array $context,$eventName)
     {
         $context['request'] = $this;
 
