@@ -8,7 +8,7 @@ use Guzzle\Http\Message\EntityEnclosingRequestInterface;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Curl\CurlMultiInterface;
 use Guzzle\Http\Exception\CurlException;
-use Symfony\Contracts\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Plugin to automatically retry failed HTTP requests using a backoff strategy
