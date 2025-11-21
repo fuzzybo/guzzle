@@ -4,7 +4,7 @@ namespace Guzzle\Plugin\Md5;
 
 use Guzzle\Common\Event;
 use Guzzle\Common\Exception\UnexpectedValueException;
-use Symfony\Contracts\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Ensures that an the MD5 hash of an entity body matches the Content-MD5
