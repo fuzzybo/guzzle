@@ -7,7 +7,7 @@ use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Service\Command\CommandInterface;
 use Guzzle\Service\Description\Operation;
 use Guzzle\Plugin\ErrorResponse\Exception\ErrorResponseException;
-use Symfony\Contracts\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Converts generic Guzzle response exceptions into errorResponse exceptions
