@@ -34,8 +34,9 @@ class AbstractHasDispatcher implements HasDispatcherInterface
 
         return $this->eventDispatcher;
     }
-
-    public function dispatch(array $context = array(), $eventName)
+//    public function dispatch(array $context = array(), $eventName)
+//    Optional parameter $context declared before required parameter $eventName is implicitly treated as a required parameter
+    public function dispatch(array $context, $eventName)
     {
         return $this->getEventDispatcher()->dispatch(new Event($context), $eventName);
     }
