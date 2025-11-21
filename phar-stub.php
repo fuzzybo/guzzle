@@ -2,7 +2,7 @@
 
 Phar::mapPhar('guzzle.phar');
 
-require_once 'phar://guzzle.phar/vendor/symfony/class-loader/Symfony/Contracts/ClassLoader/UniversalClassLoader.php';
+require_once 'phar://guzzle.phar/vendor/symfony/class-loader/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 
 $classLoader = new Symfony\Contracts\ClassLoader\UniversalClassLoader();
 $classLoader->registerNamespaces(array(
