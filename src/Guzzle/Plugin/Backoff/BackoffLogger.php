@@ -5,7 +5,7 @@ namespace Guzzle\Plugin\Backoff;
 use Guzzle\Common\Event;
 use Guzzle\Log\LogAdapterInterface;
 use Guzzle\Log\MessageFormatter;
-use Symfony\Contracts\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Logs backoff retries triggered from the BackoffPlugin
