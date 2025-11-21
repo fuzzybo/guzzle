@@ -15,9 +15,9 @@ use Guzzle\Http\EntityBodyInterface;
 use Guzzle\Http\Message\Header\HeaderInterface;
 use Guzzle\Http\Url;
 use Guzzle\Parser\ParserRegistry;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use Symfony\Contracts\EventDispatcher\EventDispatcher;
-use Symfony\Contracts\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * HTTP request class to send requests
